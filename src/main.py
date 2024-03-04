@@ -39,15 +39,8 @@ def get_ai_message():
 
   return create_ai_message(content);
 
-
-def add_user_message(content):
-  messages.append(create_user_message(content));
-
 def create_ai_message(content):
   return create_message('assistant', content);
-
-def update_ai_message(message, new_content):
-  message.content = message['content'] + new_content;
 
 def create_user_message(content):
   return create_message('user', content);
