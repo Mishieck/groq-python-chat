@@ -1,17 +1,16 @@
 import os;
+import sys;
 from groq import Groq;
+from rich.console import Console;
 
 MODEL = 'mixtral-8x7b-32768';
 API_KEY = os.environ.get('GROQ_API_KEY');
-
-client = Groq(
-  api_key = API_KEY
-);
+NERD_FONT_FLAG = '--unf';
 
 def run():
-  print('Groq:');
+  console.print(format_heading('assistant', model_name));
   print('How may I assist you?');
-  print('');
+  print();
 
   while True:
     user_message = get_user_message();
@@ -23,12 +22,12 @@ def run():
     print('\n');
 
 def get_user_message():
-  print('You:');
-  content = input('> ');
+  console.print(format_heading('user', username));
+  content = input();
   return create_user_message(content);
 
 def get_ai_message():
-  print('Groq:');
+  console.print(format_heading('assistant', model_name));
   stream = get_ai_message_stream(messages);
   content = '';
 
@@ -59,7 +58,64 @@ def get_ai_message_stream(messages):
     stream=True,
   );
 
+
+def get_nerd_font_flag(args: list[str]):
+  return len(args) > 1 and args[1] == NERD_FONT_FLAG;
+
+def format_emoji_heading(role, name):
+  return underline(f'{emojis[role]} {name}');
+
+def format_nerd_font_heading(role, name):
+  styles = nerd_font_styles[role];
+  icon = nerd_font_icons[role];
+  heading = f'{icon}  {name}';
+  open = set_text_styles(styles['foreground'], '');
+  close = set_text_styles(styles['foreground'], '');
+  middle = set_text_styles(styles['text'], heading);
+  return f'{open}{middle}{close}';
+
+def underline(string):
+  return string + '\n' + '-' * (len(string) + 1);
+
+def set_text_styles(styles, text):
+  return f'[{styles}]{text}[/]';
+
+def get_model_name(id: str):
+  return id.split('-')[0];
+
+model = 'mixtral-8x7b-32768';
+username = os.getlogin();
+client = Groq(api_key = API_KEY);
+model_name = get_model_name(MODEL);
 system_message = create_message('system', 'you are a helpful assistant.');
 messages = [system_message];
+using_nerd_font = get_nerd_font_flag(sys.argv);
+format_heading = format_nerd_font_heading if using_nerd_font else format_emoji_heading;
+console = Console();
+
+emojis = {
+  'user': ':thinking_face:',
+  'assistant': ':robot_face:'
+};
+
+magenta = {
+  'text': 'bold white on magenta',
+  'foreground': 'magenta'
+};
+
+cyan = {
+  'text': 'bold black on cyan',
+  'foreground': 'cyan'
+};
+
+nerd_font_styles = {
+  'user': magenta,
+  'assistant': cyan
+};
+
+nerd_font_icons = {
+  'user': '󰀄',
+  'assistant': '󰚩'
+};
 
 run();
