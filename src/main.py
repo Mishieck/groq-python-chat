@@ -118,4 +118,5 @@ nerd_font_icons = {
   'assistant': '󰚩'
 }
 
-run()
+if __name__ == '__main__':
+  run()
