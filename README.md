@@ -1,3 +1,3 @@
 # Groq Python Chat
 
-A chat application that used Groq implemented using Python.
+A chat application that uses Groq implemented using Python.
