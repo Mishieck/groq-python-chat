@@ -74,7 +74,7 @@ def format_nerd_font_heading(role, name):
   return f'{open}{middle}{close}'
 
 def underline(string):
-  return string + '\n' + '-' * (len(string) + 1)
+  return string + '\n' + '---'
 
 def set_text_styles(styles, text):
   return f'[{styles}]{text}[/]'
