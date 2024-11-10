@@ -17,12 +17,12 @@ class Message:
 
 @dataclass(frozen=True)
 class TextStyles:
-  text: str
+  foreground: str
   background: str
 
   @property
   def foreground_and_background(self) -> str:
-    return f'bold {self.text} on {self.background}'
+    return f'bold {self.foreground} on {self.background}'
 
 @dataclass(frozen = True)
 class Icons:
@@ -63,8 +63,8 @@ system_message = Message(role = 'system', content = 'you are a helpful assistant
 messages: List[Message] = [asdict(system_message)]
 
 using_nerd_font = len(sys.argv) > 1 and sys.argv[1] == NERD_FONT_FLAG
-magenta = TextStyles(text = 'white', background = 'magenta')
-cyan = TextStyles(text = 'bold black on cyan', background = 'cyan')
+magenta = TextStyles(foreground = 'white', background = 'magenta')
+cyan = TextStyles(foreground = 'black', background = 'cyan')
 text_styles = { 'user': cyan, 'assistant': magenta}
 nerd_font_icons = Icons(user = '󰀄', assistant = '󰚩')
 
