@@ -65,7 +65,7 @@ messages: List[Message] = [asdict(system_message)]
 using_nerd_font = len(sys.argv) > 1 and sys.argv[1] == NERD_FONT_FLAG
 magenta = TextStyles(foreground = 'white', background = 'magenta')
 cyan = TextStyles(foreground = 'black', background = 'cyan')
-text_styles = { 'user': cyan, 'assistant': magenta}
+text_styles = { 'user': magenta, 'assistant': cyan }
 nerd_font_icons = Icons(user = '󰀄', assistant = '󰚩')
 
 username = os.getlogin()
