@@ -19,7 +19,13 @@ cd groq-python
 ```
 
 - Create a virtual environment using your preferred method
-- Get API key from Groq and set environmental variable
+- Create environmental variable file
+
+```sh
+touch .env # For linux
+```
+
+- Get API key from Groq and set environmental variable in `.env` file
 
 ```sh
 GROQ_API_KEY=your_api_key
