@@ -43,6 +43,19 @@ For example,
 MODEL=mixtral-8x7b-32768
 ```
 
+- Install dependencies
+    - Groq
+
+    ```sh
+    pip install groq
+    ```
+
+    - Rich
+
+    ```sh
+    pip install rich
+    ```
+
 - Run script
 
 ```sh
