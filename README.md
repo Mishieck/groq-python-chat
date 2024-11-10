@@ -9,7 +9,7 @@ A chat application that uses Groq implemented using Python.
 - Clone this repo
 
 ```sh
-git clone git@github.com:Mishieck/groq-python.git
+git clone git@github.com:Mishieck/groq-python-chat.git
 ```
 
 - Navigate to repo
