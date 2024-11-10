@@ -35,9 +35,9 @@ class Header:
   role: str
   text: str
 
-  def format(self) -> str:
+  def __repr__(self):
     if self.using_nerd_font: return self.format_using_nerd_font()
-    else: return  self.format_without_nerd_font()
+    else: return self.format_without_nerd_font()
 
   def format_using_nerd_font(self) -> str:
     icon = self.get_icon(nerd_font_icons)
@@ -74,8 +74,8 @@ model_name = MODEL.split('-')[0]
 ai_header = Header(using_nerd_font = using_nerd_font, role = 'assistant', text = model_name)
 
 headers = {
-  'user': user_header.format(),
-  'assistant': ai_header.format()
+  'user': str(user_header),
+  'assistant': str(ai_header)
 }
 
 console = Console()
