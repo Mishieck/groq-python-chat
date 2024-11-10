@@ -19,17 +19,34 @@ cd groq-python
 ```
 
 - Create a virtual environment using your preferred method
+- Get API key from Groq and set environmental variable
+
+```sh
+GROQ_API_KEY=your_api_key
+```
+
+- Set LLM model
+
+```sh
+MODEL=model_of_your_choice
+```
+
+For example,
+
+```sh
+MODEL=mixtral-8x7b-32768
+```
+
 - Run script
 
 ```sh
 python3 src/main.py
 ```
 
-or 
+or
 
 ```sh
 python3 src/main.py --unf
 ```
 
 if you have a [Nerd Font](https://www.nerdfonts.com/) installed.
-
