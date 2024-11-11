@@ -15,7 +15,7 @@ git clone git@github.com:Mishieck/groq-python-chat.git
 - Navigate to repo
 
 ```sh
-cd groq-python
+cd groq-python-chat
 ```
 
 - Create a virtual environment using your preferred method
