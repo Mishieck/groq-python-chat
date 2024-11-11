@@ -10,12 +10,12 @@ MODEL = os.environ.get('MODEL')
 API_KEY = os.environ.get('GROQ_API_KEY')
 NERD_FONT_FLAG = '--unf'
 
-@dataclass(frozen=True)
+@dataclass(frozen = True)
 class Message:
   role: str # 'system' | 'assistant' | 'user'
   content: str
 
-@dataclass(frozen=True)
+@dataclass(frozen = True)
 class TextStyles:
   foreground: str
   background: str
