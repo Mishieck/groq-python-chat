@@ -2,12 +2,12 @@ import os
 import sys
 from groq import Groq
 from rich.console import Console
-from typing import List
+from typing import Dict, List
 from dataclasses import dataclass
 from dataclasses import asdict
 
 MODEL = os.environ.get('MODEL')
-API_KEY = os.environ.get('GROQ_API_KEY')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 NERD_FONT_FLAG = '--unf'
 
 @dataclass(frozen = True)
@@ -55,12 +55,15 @@ class Header:
   def get_icon(self, icons: Icons) -> str:
     return icons.user if self.role == 'user' else icons.assistant
 
-  def set_text_styles(styles, text) -> str:
+  @classmethod
+  def set_text_styles(cls, styles: str, text: str) -> str:
     return f'[{styles}]{text}[/]'
 
-client = Groq(api_key = API_KEY)
+Messages = List[Dict[str, str]]
+
+client = Groq(api_key = str(GROQ_API_KEY))
 system_message = Message(role = 'system', content = 'you are a helpful assistant.')
-messages: List[Message] = [asdict(system_message)]
+messages: Messages = [asdict(system_message)]
 
 using_nerd_font = len(sys.argv) > 1 and sys.argv[1] == NERD_FONT_FLAG
 magenta = TextStyles(foreground = 'white', background = 'magenta')
@@ -70,7 +73,7 @@ nerd_font_icons = Icons(user = '󰀄', assistant = '󰚩')
 
 username = os.getlogin()
 user_header = Header(using_nerd_font = using_nerd_font, role = 'user', text = username)
-model_name = MODEL.split('-')[0]
+model_name = str(MODEL).split('-')[0]
 ai_header = Header(using_nerd_font = using_nerd_font, role = 'assistant', text = model_name)
 
 headers = {
@@ -81,6 +84,8 @@ headers = {
 console = Console()
 
 def main():
+  handle_missing_env_var('GROQ_API_KEY', GROQ_API_KEY)
+  handle_missing_env_var('MODEL', MODEL)
   print("Enter 'exit' to quit chat.\n")
   console.print(headers['assistant'])
   print('How may I assist you?')
@@ -111,7 +116,7 @@ def get_ai_message() -> Message:
 
   return Message(role = 'assistant', content = content)
 
-def get_ai_message_stream(messages: List[Message]):  
+def get_ai_message_stream(messages: Messages):  
   return client.chat.completions.create(
     messages = messages,
     model = MODEL,
@@ -121,6 +126,11 @@ def get_ai_message_stream(messages: List[Message]):
     stop = None,
     stream = True,
   )
+
+def handle_missing_env_var(name: str, value: str | None):
+  if value is None:
+    print(f"Environmental variable '{name}' is not set.")
+    exit()
 
 if __name__ == '__main__':
   main()
